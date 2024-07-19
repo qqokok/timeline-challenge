@@ -1,8 +1,13 @@
-export const TrackList = () => {
+import { forwardRef } from 'react';
+
+type Ref = HTMLDivElement;
+
+export const TrackList = forwardRef<Ref>((_, ref) => {
   // TODO: implement scroll sync with `KeyframeList`
 
   return (
     <div
+      ref={ref}
       className="grid grid-flow-row auto-rows-[40px]
       border-r border-solid border-r-gray-700 
       overflow-auto"
@@ -40,4 +45,4 @@ export const TrackList = () => {
       </div>
     </div>
   );
-};
+});

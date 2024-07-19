@@ -1,5 +1,10 @@
+import { forwardRef } from 'react';
+
 import { Segment } from "./Segment";
-export const KeyframeList = () => {
+
+type Ref = HTMLDivElement;
+
+export const KeyframeList = forwardRef<Ref>((_, ref) => {
   // TODO: implement scroll sync with `Ruler` and `TrackList`
 
   return (
@@ -16,4 +21,4 @@ export const KeyframeList = () => {
       <Segment />
     </div>
   );
-};
+});
