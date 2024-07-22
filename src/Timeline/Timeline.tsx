@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import { Playhead } from "./Playhead";
 import { Ruler } from "./Ruler";
 import { TrackList } from "./TrackList";
@@ -29,7 +29,7 @@ export const Timeline = () => {
         nodes: [rulerRef.current, keyframeListRef.current],
       });
     }
-  }, [registerVerticalScrollSync, registerHorizontalScrollSync]);
+  }, []);
 
   return (
     <div
@@ -41,7 +41,7 @@ export const Timeline = () => {
       <Ruler ref={rulerRef} />
       <TrackList ref={trackListRef} />
       <KeyframeList ref={keyframeListRef}  />
-      <Playhead time={time} />
+      <Playhead time={time} rulerRef={rulerRef} />
     </div>
   );
 };
