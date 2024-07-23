@@ -1,18 +1,38 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
+
+import NumberInputField from '../components/NumberInputField';
 
 type PlayControlsProps = {
-  time: number;
-  setTime: (time: number) => void;
+  timeControls: { time: number; duration: number };
+  setTime: ({ time, duration }: { time: number; duration: number }) => void;
 };
 
-export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
-  // TODO: implement time <= maxTime
+
+const TIME_STEP_LENGTH = 10;
+const DURATION_STEP_LENGTH = 10;
+
+
+
+export const PlayControls = ({ timeControls: { time, duration }, setTime }: PlayControlsProps) => {
+
+  const onDurationChange = useCallback(
+    (newDuration: number) => {
+      setTime({
+        time: time > newDuration ? newDuration : time,
+        duration: newDuration,
+      });
+    },
+    [setTime, time],
+  );
 
   const onTimeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTime(Number(e.target.value));
+    (newTime: number) => {
+      setTime({
+        time: newTime > duration ? duration : newTime,
+        duration,
+      });
     },
-    [setTime],
+    [setTime, duration],
   );
 
   return (
@@ -23,27 +43,24 @@ export const PlayControls = ({ time, setTime }: PlayControlsProps) => {
     >
       <fieldset className="flex gap-1">
         Current
-        <input
-          className="bg-gray-700 px-1 rounded"
-          type="number"
-          data-testid="time"
+        <NumberInputField
+          dataTestId="time"
           min={0}
           max={2000}
-          step={10}
-          value={time}
+          step={TIME_STEP_LENGTH}
+          defaultValue={time}
           onChange={onTimeChange}
         />
       </fieldset>
       -
       <fieldset className="flex gap-1">
-        <input
-          className="bg-gray-700 px-1 rounded"
-          type="number"
-          data-testid="max-time"
+        <NumberInputField
+          dataTestId="max-time"
           min={100}
-          max={2000}
-          step={10}
-          defaultValue={2000}
+          max={6000}
+          step={DURATION_STEP_LENGTH}
+          defaultValue={duration}
+          onChange={onDurationChange}
         />
         Duration
       </fieldset>
