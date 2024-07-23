@@ -1,5 +1,10 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 
+/**
+ * @typedef {Object} PlayheadProps
+ * @property {number} time - A number representing the current time.
+ * @property {React.RefObject<HTMLDivElement>} rulerRef - A reference to the ruler element used for positioning the playhead.
+ */
 type PlayheadProps = {
   time: number;
   rulerRef: React.RefObject<HTMLDivElement>;
@@ -22,7 +27,7 @@ export const Playhead = ({ time, rulerRef }: PlayheadProps) => {
     if (!rulerNode || !playheadRef.current) return;
 
     const { scrollLeft, clientWidth } = rulerNode as HTMLDivElement;
-    
+
     let playheadPosition = time - scrollLeft;
     let isHidden = playheadPosition < -RULER_PADDING_LEFT || (playheadPosition + RULER_PADDING_LEFT) > clientWidth;
   
@@ -48,7 +53,14 @@ export const Playhead = ({ time, rulerRef }: PlayheadProps) => {
         rulerRef.current.removeEventListener('scroll', handleRulerScroll);
       }
     };
-  }, [rulerRef, playheadRef.current]);
+  }, [rulerRef, playheadRef.current, time]);
+
+  // resolve playhead position on time changed
+  useEffect(() => {
+    if (rulerRef.current) {
+      resolvePlayheadPosition(rulerRef.current);
+    }
+  }, [time]);
 
   return (
     <div

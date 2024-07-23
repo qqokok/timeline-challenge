@@ -1,8 +1,12 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
+
+type RulerProps = {
+  duration: number;
+};
 
 type Ref = HTMLDivElement;
 
-export const Ruler = forwardRef<Ref>((_, ref) => {
+export const Ruler = React.memo(forwardRef<Ref, RulerProps>(({ duration }, ref) => {
   // TODO: implement mousedown and mousemove to update time and Playhead position
 
   return (
@@ -13,7 +17,10 @@ export const Ruler = forwardRef<Ref>((_, ref) => {
       overflow-x-auto overflow-y-hidden"
       data-testid="ruler"
     >
-      <div className="w-[2000px] h-6 rounded-md bg-white/25"></div>
+      <div
+        className="w-[2000px] h-6 rounded-md bg-white/25"
+        style={{ width: `${duration}px` }}
+      />
     </div>
   );
-});
+}));

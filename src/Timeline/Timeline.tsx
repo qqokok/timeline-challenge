@@ -8,8 +8,10 @@ import { PlayControls } from "./PlayControls";
 import useSyncScroll from "../hooks/useSyncScroll";
 
 export const Timeline = () => {
-  // FIXME: performance concerned
-  const [time, setTime] = useState(0);
+  const [timeControls, setTime] = useState({
+    time: 0,
+    duration: 2000,
+  });
   const trackListRef = useRef<HTMLDivElement>(null);
   const keyframeListRef = useRef<HTMLDivElement>(null);
   const rulerRef = useRef<HTMLDivElement>(null);
@@ -37,11 +39,11 @@ export const Timeline = () => {
     bg-gray-800 border-t-2 border-solid border-gray-700"
       data-testid="timeline"
     >
-      <PlayControls time={time} setTime={setTime} />
-      <Ruler ref={rulerRef} />
+      <PlayControls timeControls={timeControls} setTime={setTime} />
+      <Ruler duration={timeControls.duration} ref={rulerRef} />
       <TrackList ref={trackListRef} />
-      <KeyframeList ref={keyframeListRef}  />
-      <Playhead time={time} rulerRef={rulerRef} />
+      <KeyframeList duration={timeControls.duration} ref={keyframeListRef}  />
+      <Playhead time={timeControls.time} rulerRef={rulerRef} />
     </div>
   );
 };

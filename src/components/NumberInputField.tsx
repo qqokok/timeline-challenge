@@ -64,7 +64,7 @@ const NumberInputField = ({
 
       onChange(onChangeValue);
     },
-    [],
+    [onChange],
   );
 
   const handleInputFocus = useCallback(() => {

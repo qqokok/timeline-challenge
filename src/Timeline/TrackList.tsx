@@ -1,10 +1,9 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 
 type Ref = HTMLDivElement;
 
-export const TrackList = forwardRef<Ref>((_, ref) => {
+export const TrackList = React.memo(forwardRef<Ref>((_, ref) => {
   // TODO: implement scroll sync with `KeyframeList`
-
   return (
     <div
       ref={ref}
@@ -45,4 +44,4 @@ export const TrackList = forwardRef<Ref>((_, ref) => {
       </div>
     </div>
   );
-});
+}));

@@ -11,8 +11,6 @@ type PlayControlsProps = {
 const TIME_STEP_LENGTH = 10;
 const DURATION_STEP_LENGTH = 10;
 
-
-
 export const PlayControls = ({ timeControls: { time, duration }, setTime }: PlayControlsProps) => {
 
   const onDurationChange = useCallback(
