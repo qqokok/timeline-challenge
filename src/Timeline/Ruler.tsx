@@ -1,13 +1,83 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback, useRef } from 'react';
 
 type RulerProps = {
   duration: number;
+  time: number;
+  setTime: ({ time, duration }: { time: number; duration: number }) => void;
 };
 
 type Ref = HTMLDivElement;
 
-export const Ruler = React.memo(forwardRef<Ref, RulerProps>(({ duration }, ref) => {
-  // TODO: implement mousedown and mousemove to update time and Playhead position
+const RULER_PADDING_LEFT: number = 16;
+
+export const Ruler = React.memo(forwardRef<Ref, RulerProps>(({ duration, time, setTime }, ref) => {
+  // use ref to bind mouse move events
+  const rulerSegmentRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const currentTarget = e.currentTarget as HTMLDivElement;
+
+    const diff = e.clientX - currentTarget.offsetLeft;
+    const newPlayheadPosition = Math.round(diff / 10) * 10;
+    if (newPlayheadPosition !== time) {
+      setTime({ time: newPlayheadPosition, duration });
+    }
+  }, [time]);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+
+    const diff = e.clientX - e.currentTarget.offsetLeft - RULER_PADDING_LEFT;
+    const newPlayheadPosition = Math.round(diff / 10) * 10;
+    setTime({
+      time: newPlayheadPosition > duration ? duration : newPlayheadPosition,
+      duration
+    });
+    if (rulerSegmentRef.current) {
+      isDragging.current = true;
+      rulerSegmentRef.current.onmousemove = handleMouseMove;
+      // listen for mouse up globally
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+  }, [duration, setTime]);
+
+  const handleMouseUp = useCallback(() => {
+    if (rulerSegmentRef.current) {
+      rulerSegmentRef.current.onmousemove = null;
+      isDragging.current = false;
+    }
+    window.removeEventListener('mouseup', handleMouseUp);
+  }, []);
+
+  const checkIfMouseHovering = (
+    { clientX, clientY }: { clientX: number; clientY: number },
+    rect: DOMRect
+  ) => {
+    if (clientX < rect.left || clientX > rect.right) {
+      return false;
+    }
+    if (clientY < rect.top || clientY > rect.bottom) {
+      return false;
+    }
+
+    return true;
+  }
+
+  // Except user mouse leave, will also be triggered when the component re-rendered
+  const handleMouseLeave = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+
+    // check if mouse is still hovering on the ruler
+    const isHovered = checkIfMouseHovering(
+      { clientX: e.clientX, clientY: e.clientY },
+      e.currentTarget.getBoundingClientRect(),
+    );
+
+    if (!isHovered && rulerSegmentRef.current) {
+      rulerSegmentRef.current.onmousemove = null;
+      isDragging.current = false;
+    }
+  }, []);
 
   return (
     <div
@@ -16,8 +86,11 @@ export const Ruler = React.memo(forwardRef<Ref, RulerProps>(({ duration }, ref) 
       border-b border-solid border-gray-700 
       overflow-x-auto overflow-y-hidden"
       data-testid="ruler"
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
     >
       <div
+        ref={rulerSegmentRef}
         className="w-[2000px] h-6 rounded-md bg-white/25"
         style={{ width: `${duration}px` }}
       />

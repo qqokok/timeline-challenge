@@ -9,8 +9,9 @@ export const TrackList = React.memo(forwardRef<Ref>((_, ref) => {
       ref={ref}
       className="grid grid-flow-row auto-rows-[40px]
       border-r border-solid border-r-gray-700 
-      overflow-auto"
+      overflow-auto select-none"
       data-testid="track-list"
+      draggable={false}
     >
       <div className="p-2">
         <div>Track A</div>
