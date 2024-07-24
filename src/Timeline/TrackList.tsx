@@ -3,7 +3,6 @@ import React, { forwardRef } from 'react';
 type Ref = HTMLDivElement;
 
 export const TrackList = React.memo(forwardRef<Ref>((_, ref) => {
-  // TODO: implement scroll sync with `KeyframeList`
   return (
     <div
       ref={ref}

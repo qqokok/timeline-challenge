@@ -23,7 +23,7 @@ const KEY_ESC = 'Escape';
  * @param {number} props.min - The minimum allowed value for the input field.
  * @param {number} props.max - The maximum allowed value for the input field.
  * @param {number} props.step - The increment step for the input field.
- * @param {string} props.dataTestId - The data-test-id attribute for the input field.
+ * @param {string} props.dataTestId - The data-testid attribute for the input field.
  * @return {JSX.Element} The rendered input field component.
  */
 const NumberInputField = ({
@@ -127,7 +127,7 @@ const NumberInputField = ({
     <input
       ref={inputRef}
       type="number"
-      data-test-id={dataTestId}
+      data-testid={dataTestId}
       className="bg-gray-700 px-1 rounded"
       min={min}
       max={max}

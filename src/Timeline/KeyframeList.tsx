@@ -17,7 +17,7 @@ export const KeyframeList = React.memo(forwardRef<Ref, RulerProps>(({ duration }
     <div
       ref={ref}
       className="px-4 min-w-0 overflow-auto"
-      data-test-id="keyframe-list"
+      data-testid="keyframe-list"
     >
       {DEMO_SEGMENT_LIST.map((_, index) => (
         <Segment key={index} duration={duration} />
