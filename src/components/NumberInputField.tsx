@@ -39,7 +39,8 @@ const NumberInputField = ({
   const [value, setValue] = useState(defaultValue);
 
   const validateValueAndOnChange = useCallback(() => {
-    const roundedValue = Math.round(value);
+    // round to nearest step
+    const roundedValue = Math.round(value / step) * step;
     let onChangeValue = roundedValue;
     if (roundedValue < min) {
       onChangeValue = min
