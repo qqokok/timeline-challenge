@@ -11,6 +11,10 @@ type PlayControlsProps = {
 const TIME_STEP_LENGTH = 10;
 const DURATION_STEP_LENGTH = 10;
 
+const TIME_MIN = 0;
+const DURATION_MIN = 100;
+const DURATION_MAX = 6000;
+
 export const PlayControls = ({ timeControls: { time, duration }, setTime }: PlayControlsProps) => {
 
   const onDurationChange = useCallback(
@@ -43,8 +47,8 @@ export const PlayControls = ({ timeControls: { time, duration }, setTime }: Play
         Current
         <NumberInputField
           dataTestId="time"
-          min={0}
-          max={2000}
+          min={TIME_MIN}
+          max={duration}
           step={TIME_STEP_LENGTH}
           defaultValue={time}
           onChange={onTimeChange}
@@ -54,8 +58,8 @@ export const PlayControls = ({ timeControls: { time, duration }, setTime }: Play
       <fieldset className="flex gap-1">
         <NumberInputField
           dataTestId="max-time"
-          min={100}
-          max={6000}
+          min={DURATION_MIN}
+          max={DURATION_MAX}
           step={DURATION_STEP_LENGTH}
           defaultValue={duration}
           onChange={onDurationChange}

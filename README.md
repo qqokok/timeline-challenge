@@ -2,15 +2,18 @@
 
 ## Usage
 
-prerequisites: install (yarn)[https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable]
+prerequisites: install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
 
 ```
-// To run the app
+// Clone this repo and install
+git@github.com:qqokok/timeline-challenge.git
+cd timeline-challenge
 yarn install
+
+// To run the app
 yarn start
 
 // To run the tests
-yarn install
 yarn test
 
 ```
