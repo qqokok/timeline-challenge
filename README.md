@@ -1,5 +1,20 @@
 # Phase Timeline Challenge
 
+## Usage
+
+prerequisites: install (yarn)[https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable]
+
+```
+// To run the app
+yarn install
+yarn start
+
+// To run the tests
+yarn install
+yarn test
+
+```
+
 ## Overview
 
 Implement interactive features for a Timeline component. We will provide a basic Timeline component scaffold, and your task is to implement the functionality that meets the user behavior requirements outlined below.

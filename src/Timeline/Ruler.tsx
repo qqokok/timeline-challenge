@@ -35,6 +35,7 @@ export const Ruler = React.memo(forwardRef<Ref, RulerProps>(({ duration, time, s
     });
     if (rulerSegmentRef.current) {
       isDragging.current = true;
+      // bind mouse move on segment to avoid dragging out of the segment
       rulerSegmentRef.current.onmousemove = handleMouseMove;
       // listen for mouse up globally
       window.addEventListener('mouseup', handleMouseUp);
@@ -91,6 +92,7 @@ export const Ruler = React.memo(forwardRef<Ref, RulerProps>(({ duration, time, s
     >
       <div
         ref={rulerSegmentRef}
+        data-testid="ruler-segment"
         className="w-[2000px] h-6 rounded-md bg-white/25"
         style={{ width: `${duration}px` }}
       />

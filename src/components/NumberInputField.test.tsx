@@ -27,7 +27,7 @@ describe('Test in NumberInputField', () => {
     expect(input).not.toHaveFocus();
   })
 
-  it(' will call onChange when input is blurred', async () => {
+  it('Will call onChange when input is blurred', async () => {
     const mockOnChange = jest.fn();
     const { getByTestId } = render(<NumberInputField {...mockInputProps} onChange={mockOnChange} />);
     const input = getByTestId(mockInputProps.dataTestId);
@@ -36,7 +36,7 @@ describe('Test in NumberInputField', () => {
     expect(mockOnChange).toHaveBeenCalledWith(300);
   })
 
-  it('typing in input will not call onChange', async () => {
+  it('Typing in input will not call onChange', async () => {
     const mockOnChange = jest.fn();
     const { getByTestId } = render(<NumberInputField {...mockInputProps} onChange={mockOnChange} />);
     const input = getByTestId(mockInputProps.dataTestId);
@@ -44,7 +44,7 @@ describe('Test in NumberInputField', () => {
     expect(mockOnChange).not.toHaveBeenCalled();
   })
 
-  it('typing arrow up and arrow down will onChange a step different from default', async () => {
+  it('Typing arrow up and arrow down will onChange a step different from default', async () => {
     const mockOnChange = jest.fn();
     const { getByTestId } = render(<NumberInputField {...mockInputProps} onChange={mockOnChange} />);
     const input = getByTestId(mockInputProps.dataTestId);
@@ -56,7 +56,7 @@ describe('Test in NumberInputField', () => {
     expect(mockOnChange).toHaveBeenCalledWith(mockInputProps.defaultValue);
   })
 
-  it('typing escape will revert to the original value and lose focus', async () => {
+  it('Typing escape will revert to the original value and lose focus', async () => {
     const mockOnChange = jest.fn();
     const { getByTestId } = render(<NumberInputField {...mockInputProps} onChange={mockOnChange} />);
     const input = getByTestId(mockInputProps.dataTestId);
@@ -67,6 +67,27 @@ describe('Test in NumberInputField', () => {
     expect(input).toHaveValue(mockInputProps.defaultValue);
     expect(input).not.toHaveFocus();
   })
+
+  it('Typing duration over max will revert to the max value', async () => {
+    const mockOnChange = jest.fn();
+    const { getByTestId } = render(<NumberInputField {...mockInputProps} onChange={mockOnChange} />);
+    const input = getByTestId(mockInputProps.dataTestId);
+    await userEvent.type(input, '3000{enter}');
+    expect(mockOnChange).toHaveBeenCalledWith(mockInputProps.max);
+  });
+
+  it('Typing duration under min will revert to the min value', async () => {
+    const mockOnChange = jest.fn();
+    const minimum = 100
+    const { getByTestId } = render(<NumberInputField
+      {...mockInputProps}
+      onChange={mockOnChange}
+      min={minimum}
+    />);
+    const input = getByTestId(mockInputProps.dataTestId);
+    await userEvent.type(input, '10{enter}');
+    expect(mockOnChange).toHaveBeenCalledWith(minimum);
+  });
 
   it('Decimal values are automatically rounded to the nearest integer', async () => {
     const mockOnChange = jest.fn();
