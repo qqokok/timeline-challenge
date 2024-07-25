@@ -23,12 +23,12 @@ export const Ruler = React.memo(forwardRef<Ref, RulerProps>(({ duration, time, s
     if (newPlayheadPosition !== time) {
       setTime({ time: newPlayheadPosition, duration });
     }
-  }, [time]);
+  }, [time, duration, setTime]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-
     const diff = e.clientX - e.currentTarget.offsetLeft - RULER_PADDING_LEFT;
     const newPlayheadPosition = Math.round(diff / 10) * 10;
+
     setTime({
       time: newPlayheadPosition > duration ? duration : newPlayheadPosition,
       duration
