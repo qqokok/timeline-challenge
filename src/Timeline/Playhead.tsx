@@ -29,6 +29,7 @@ export const Playhead = ({ time, rulerRef }: PlayheadProps) => {
     const { scrollLeft, clientWidth } = rulerNode as HTMLDivElement;
 
     let playheadPosition = time - scrollLeft;
+    // count if playhead is out of bounds based on ruler's padding
     let isHidden = playheadPosition < -RULER_PADDING_LEFT || (playheadPosition + RULER_PADDING_LEFT) > clientWidth;
   
     if (isHidden) {
@@ -39,6 +40,7 @@ export const Playhead = ({ time, rulerRef }: PlayheadProps) => {
     }
   };
 
+  // resolve playhead position during ruler scroll
   const handleRulerScroll = (e: Event) => {
     window.requestAnimationFrame(() => resolvePlayheadPosition(e.target));
   };

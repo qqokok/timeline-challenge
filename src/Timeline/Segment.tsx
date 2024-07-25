@@ -1,3 +1,8 @@
+
+/**
+ * @typedef {Object} SegmentProps
+ * @property {number} duration - A number representing the duration, also the width of the segment.
+ */
 type SegmentProps = {
   duration: number;
 };

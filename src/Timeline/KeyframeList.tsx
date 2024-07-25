@@ -2,6 +2,10 @@ import React, { forwardRef } from 'react';
 
 import { Segment } from "./Segment";
 
+/**
+ * @typedef {Object} RulerProps
+ * @property {number} duration - A number representing the duration, also the width of the segment.
+ */
 type RulerProps = {
   duration: number;
 };

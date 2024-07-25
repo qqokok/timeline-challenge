@@ -1,5 +1,11 @@
 import React, { forwardRef, useCallback, useRef } from 'react';
 
+/**
+ * @typedef {Object} RulerProps
+ * @property {number} time - A number representing the current time.
+ * @property {number} duration - A number representing the duration.
+ * @property {({ time, duration }: { time: number; duration: number }) => void} setTime - A function to update the time and duration.
+ */
 type RulerProps = {
   duration: number;
   time: number;

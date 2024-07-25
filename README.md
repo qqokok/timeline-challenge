@@ -6,7 +6,7 @@ prerequisites: install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#
 
 ```
 // Clone this repo and install
-git@github.com:qqokok/timeline-challenge.git
+git clone git@github.com:qqokok/timeline-challenge.git
 cd timeline-challenge
 yarn install
 

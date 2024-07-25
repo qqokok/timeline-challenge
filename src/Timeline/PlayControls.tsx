@@ -2,6 +2,11 @@ import { useCallback } from "react";
 
 import NumberInputField from '../components/NumberInputField';
 
+/**
+ * @typedef {Object} RulerProps
+ * @property {{ time: number; duration: number }} timeControls - An object containing the current time and duration.
+ * @property {({ time, duration }: { time: number; duration: number }) => void} setTime - A function to update the time and duration.
+ */
 type PlayControlsProps = {
   timeControls: { time: number; duration: number };
   setTime: ({ time, duration }: { time: number; duration: number }) => void;
