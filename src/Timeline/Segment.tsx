@@ -1,14 +1,9 @@
+import { useContext } from "react";
 
-/**
- * @typedef {Object} SegmentProps
- * @property {number} duration - A number representing the duration, also the width of the segment.
- */
-type SegmentProps = {
-  duration: number;
-};
+import TimeContext from "../context/TimeContext";
 
-export const Segment = ({ duration }: SegmentProps) => {
-  // TODO: resize based on time
+export const Segment = () => {
+  const { duration } = useContext(TimeContext);
 
   return (
     <div

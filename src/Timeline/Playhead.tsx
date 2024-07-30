@@ -1,4 +1,6 @@
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback, useState, useContext } from "react";
+
+import TimeContext from "../context/TimeContext";
 
 /**
  * @typedef {Object} PlayheadProps
@@ -6,15 +8,15 @@ import { useEffect, useRef, useCallback, useState } from "react";
  * @property {React.RefObject<HTMLDivElement>} rulerRef - A reference to the ruler element used for positioning the playhead.
  */
 type PlayheadProps = {
-  time: number;
   rulerRef: React.RefObject<HTMLDivElement>;
 };
 
 const RULER_PADDING_LEFT: number = 16;
 
-export const Playhead = ({ time, rulerRef }: PlayheadProps) => {
+export const Playhead = ({ rulerRef }: PlayheadProps) => {
   const [, forceUpdate] = useState(0);
   const playheadRef = useRef<HTMLDivElement>();
+  const { time } = useContext(TimeContext);
 
   const handleRefPlayhead = useCallback((node: HTMLDivElement) => {
     if (node) {

@@ -2,20 +2,11 @@ import React, { forwardRef } from 'react';
 
 import { Segment } from "./Segment";
 
-/**
- * @typedef {Object} RulerProps
- * @property {number} duration - A number representing the duration, also the width of the segment.
- */
-type RulerProps = {
-  duration: number;
-};
-
 type Ref = HTMLDivElement;
 
 const DEMO_SEGMENT_LIST = Array.from({ length: 10 });
 
-export const KeyframeList = React.memo(forwardRef<Ref, RulerProps>(({ duration }, ref) => {
-  // TODO: implement scroll sync with `Ruler` and `TrackList`
+export const KeyframeList = React.memo(forwardRef<Ref>((_, ref) => {
 
   return (
     <div
@@ -24,7 +15,7 @@ export const KeyframeList = React.memo(forwardRef<Ref, RulerProps>(({ duration }
       data-testid="keyframe-list"
     >
       {DEMO_SEGMENT_LIST.map((_, index) => (
-        <Segment key={index} duration={duration} />
+        <Segment key={index} />
       ))}
     </div>
   );

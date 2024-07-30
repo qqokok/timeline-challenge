@@ -7,6 +7,8 @@ import { PlayControls } from "./PlayControls";
 
 import useSyncScroll from "../hooks/useSyncScroll";
 
+import TimeContext from "../context/TimeContext";
+
 export const Timeline = () => {
   const [timeControls, setTime] = useState({
     time: 0,
@@ -34,21 +36,21 @@ export const Timeline = () => {
   }, []);
 
   return (
-    <div
-      className="relative h-[300px] w-full grid grid-cols-[300px_1fr] grid-rows-[40px_1fr] 
-    bg-gray-800 border-t-2 border-solid border-gray-700"
-      data-testid="timeline"
-    >
-      <PlayControls timeControls={timeControls} setTime={setTime} />
-      <Ruler
-        duration={timeControls.duration}
-        time={timeControls.time}
-        setTime={setTime}
-        ref={rulerRef}
-      />
-      <TrackList ref={trackListRef} />
-      <KeyframeList duration={timeControls.duration} ref={keyframeListRef}  />
-      <Playhead time={timeControls.time} rulerRef={rulerRef} />
-    </div>
+    <TimeContext.Provider value={timeControls}>
+      <div
+        className="relative h-[300px] w-full grid grid-cols-[300px_1fr] grid-rows-[40px_1fr]
+      bg-gray-800 border-t-2 border-solid border-gray-700"
+        data-testid="timeline"
+      >
+        <PlayControls timeControls={timeControls} setTime={setTime} />
+        <Ruler
+          setTime={setTime}
+          ref={rulerRef}
+        />
+        <TrackList ref={trackListRef} />
+        <KeyframeList ref={keyframeListRef}  />
+        <Playhead rulerRef={rulerRef} />
+      </div>
+    </TimeContext.Provider>
   );
 };
